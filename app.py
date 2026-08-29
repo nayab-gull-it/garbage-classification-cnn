@@ -4,9 +4,11 @@ A Streamlit app that loads a trained CNN model and classifies
 an uploaded waste image into one of 6 categories.
 """
 
+import gc
 import json
 import numpy as np
 import streamlit as st
+import tensorflow as tf
 from PIL import Image
 from tensorflow.keras.models import load_model
 
@@ -53,7 +55,8 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     # Display uploaded image
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Uploaded Image")
+    st.image(image, caption="Uploaded Image", use_container_width=True)
+
     # ---------- Preprocess ----------
     img_resized = image.resize(IMG_SIZE)
     img_array = np.array(img_resized) / 255.0
@@ -81,6 +84,13 @@ if uploaded_file is not None:
     # Sort descending for a cleaner chart
     prob_dict = dict(sorted(prob_dict.items(), key=lambda x: x[1], reverse=True))
     st.bar_chart(prob_dict)
+
+    # ---------- Free up memory after each prediction ----------
+    # Prevents gradual memory buildup that crashes the app on
+    # Streamlit Cloud's limited free-tier RAM after repeated uploads.
+    del img_array, predictions
+    tf.keras.backend.clear_session()
+    gc.collect()
 
 else:
     st.info("👆 Upload an image to get started.")
