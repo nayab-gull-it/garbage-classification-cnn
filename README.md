@@ -14,7 +14,7 @@ interactive Streamlit dashboard.
 
 ## 🚀 Live Demo
 
-🔗 [Add your Streamlit Cloud link here after deployment]
+🔗 https://garbage-classification-using-cnn.streamlit.app/
 
 ## 🛠️ Tech Stack
 
