@@ -58,7 +58,7 @@ streamlit run app.py
 
 ## 📄 Documentation
 
-Full Software Requirements Specification (SRS) available in the project docs.
+Full SRS document available in [`docs/SRS_Garbage_Classification_CNN.docx`](docs/SRS_Garbage_Classification_CNN.docx)
 
 ## 👤 Author
 
